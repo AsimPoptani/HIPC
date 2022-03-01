@@ -8,11 +8,23 @@
 
 #define EVENT_LENGTH 4
 
+ void randomStream(int N,void * stream) {
 
+//   Define N times char array
+ char *copyStream = malloc(sizeof(char) * (N));
+
+  for (int i = 0; i < N; i++)
+  {
+    copyStream[i] = rand ();
+    // printf("%d\n", copyStream[i]);
+  }
+    memcpy(stream, copyStream, N);
+    free(copyStream);
+}
 
 uint64_t NUM_OF_DATA_POINTS =1000000;
 int main(){
-    static int events[] = { PAPI_L1_TCM, PAPI_DP_OPS,PAPI_TOT_IIS,PAPI_TOT_INS };
+   static int events[] = { PAPI_L1_TCM, PAPI_DP_OPS,PAPI_TOT_IIS,PAPI_TOT_INS };
     long long counters[EVENT_LENGTH];
     PAPI_start_counters(counters, EVENT_LENGTH);
     // Amount of data we want to get from urandom
@@ -21,15 +33,16 @@ int main(){
     // if (!random_data) { perror("malloc arr"); exit(EXIT_FAILURE); };
     printf("Address of random_data: %p\n", random_data);
     printf("Getting data from urandom...\n");
-    size_t bytesToBeRead = sizeof(uint16_t)*2*NUM_OF_DATA_POINTS;
-    printf("Bytes to be read: %zu\n", bytesToBeRead);
+    uint64_t bytesToBeRead = sizeof(uint16_t)*2*NUM_OF_DATA_POINTS;
+    printf("Bytes to be read: %llu\n", bytesToBeRead);
     // Read data from urandom
-    int fd = open("/dev/urandom", O_RDONLY);
-    if (fd < 0) { perror("open"); exit(EXIT_FAILURE); };
-    ssize_t bytesRead = read(fd, random_data, bytesToBeRead);
-    if (bytesRead < 0) { perror("read"); exit(EXIT_FAILURE); };
-    printf("Bytes read: %zu\n", bytesRead);
-    close(fd);
+   // int fd = open("/dev/urandom", O_RDONLY);
+    //if (fd < 0) { perror("open"); exit(EXIT_FAILURE); };
+    //ssize_t bytesRead = read(fd, random_data, bytesToBeRead);
+    //if (bytesRead < 0) { perror("read"); exit(EXIT_FAILURE); };
+    randomStream(bytesToBeRead,random_data);
+    // printf("Bytes read: %zu\n", bytesRead);
+    // close(fd);
     printf("Closed urandom\n");
 
     // arc4random_buf(random_data, bytesToBeRead);
