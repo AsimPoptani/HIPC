@@ -18,7 +18,7 @@ double random_number() {
 }
 
 int main(int argc, char *argv[]) {
-    EVENT_LENGTH=4;
+    int EVENT_LENGTH=4;
 //    PAPI_library_init(PAPI_VER_CURRENT);
    static int events[] = { PAPI_L1_TCM, PAPI_DP_OPS,PAPI_TOT_IIS,PAPI_TOT_INS };
  //   long long int vals[4] = {};
