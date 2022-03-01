@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <papi.h>
 
 #define MAX_RAND 10000
 
@@ -17,6 +18,9 @@ double random_number() {
 }
 
 int main(int argc, char *argv[]) {
+    int events[NUM_EVENTS] = { PAPI_L1_TCM, PAPI_DP_OPS,PAPI_TOT_IIS,PAPI_TOT_INS };
+    long long int vals[NUM_EVENTS] = { 0, 0,0,0 };
+    PAPI_start_counters(events, NUM_EVENTS);
 	// read N from the first command line argument
 	int N = atoi(argv[1]);
 
@@ -59,4 +63,10 @@ int main(int argc, char *argv[]) {
 	for (int i = 0; i < N; i++) {
 		fprintf(stderr,"%lf, %lf, %lf, %lf, %lf, %lf, %d\n", sphere[i].x, sphere[i].y, sphere[i].z, sphere[i].r, area[i], volume[i], intersects[i]);
 	}
+    PAPI_read_counters(vals, NUM_EVENTS);
+    printf("PAPI L1_TCM: %lld\n", vals[0]);
+    printf("PAPI DP_OPS: %lld\n", vals[1]);
+    printf("PAPI TOT_IIS: %lld\n", vals[2]);
+    printf("PAPI TOT_INS: %lld\n", vals[3]);
+    return 0;
 }
