@@ -8,6 +8,8 @@
 
 #define EVENT_LENGTH 4
 
+
+
 uint64_t NUM_OF_DATA_POINTS =1000000;
 int main(){
     static int events[] = { PAPI_L1_TCM, PAPI_DP_OPS,PAPI_TOT_IIS,PAPI_TOT_INS };
