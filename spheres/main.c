@@ -18,8 +18,8 @@ double random_number() {
 }
 
 int main(int argc, char *argv[]) {
-    int events[NUM_EVENTS] = { PAPI_L1_TCM, PAPI_DP_OPS,PAPI_TOT_IIS,PAPI_TOT_INS };
-    long long int vals[NUM_EVENTS] = { 0, 0,0,0 };
+    int events[4] = { PAPI_L1_TCM, PAPI_DP_OPS,PAPI_TOT_IIS,PAPI_TOT_INS };
+    long long int vals[4] = { 0, 0,0,0 };
     PAPI_start_counters(events, NUM_EVENTS);
 	// read N from the first command line argument
 	int N = atoi(argv[1]);
