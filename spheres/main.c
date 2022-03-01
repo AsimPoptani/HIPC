@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <papi.h>
-
+#include <omp.h>
 #define MAX_RAND 10000
 
 struct sphere_t {
@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
 
 	struct sphere_t * sphere = malloc(sizeof(struct sphere_t) * N);
 	// fill with random numbers
+    #pragma omp parallel for
 	for (int i = 0; i < N; i++) {
 		sphere[i].x = random_number();
 		sphere[i].y = random_number();
@@ -41,18 +42,21 @@ int main(int argc, char *argv[]) {
 
 	// calculate areas
 	double * area = calloc(N, sizeof(double));
+    #pragma omp parallel for
 	for (int i = 0; i < N; i++) {
 		area[i] = 4.0 * M_PI * pow(sphere[i].r, 2.0);
 	}
 
 	// calculate volume
 	double * volume = calloc(N, sizeof(double));
+    #pragma omp parallel for
 	for (int i = 0; i < N; i++) {
 		volume[i] = (4.0 / 3.0) * M_PI * pow(sphere[i].r, 3.0);
 	}
 	
 	// calculate the number of spheres each sphere intersects
 	int * intersects = calloc(N, sizeof(int));
+    #pragma omp parallel for collapse(2)
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			if (i == j) continue; // same circle
@@ -66,6 +70,7 @@ int main(int argc, char *argv[]) {
 
 	// print out all information to the screen (consider piping this to a file)
 	fprintf(stderr,"x, y, z, r, area, volume, intersects\n");
+    #pragma omp parallel for
 	for (int i = 0; i < N; i++) {
 		fprintf(stderr,"%lf, %lf, %lf, %lf, %lf, %lf, %d\n", sphere[i].x, sphere[i].y, sphere[i].z, sphere[i].r, area[i], volume[i], intersects[i]);
 	}
