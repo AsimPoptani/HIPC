@@ -19,8 +19,9 @@ int main(){
 
     // Allocate device memory 
     cudaMalloc((void**)&d_a, sizeof(float) * N);
-
-    while (1){
+    int counter=1000;
+    while (counter>0){
+        counter--;
         // Transfer data from host to device memory
         cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
         cudaMemcpy(a, d_a, sizeof(float) * N, cudaMemcpyDeviceToHost);
