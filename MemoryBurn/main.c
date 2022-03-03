@@ -14,7 +14,7 @@ int main(){
     float *d_a, *d_b, *d_out; 
 
     // Allocate host memory
-    a   = (float*)calloc(sizeof(float) * N);
+    a   = (float*)calloc( N,sizeof(float));
 
 
     // Allocate device memory 
