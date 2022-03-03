@@ -5,7 +5,7 @@
 #include <cuda.h>
 #include <cuda_runtime.h>
 
-#define N 10240*2560
+#define N 102400*25600
 #define MAX_ERR 1e-6
 
 
