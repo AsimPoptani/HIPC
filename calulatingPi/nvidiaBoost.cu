@@ -32,14 +32,17 @@ __global__ void square(float * data){
     // 0,0
     // 0,1
     // 0,2
-    uint64_t idx = threadIdx.x + (blockIdx.x * blockDim.x);
+    uint64_t idx = (threadIdx.x + (blockIdx.x * blockDim.x))*5;
     // int idx = blockIdx.x * blockDim.x + threadIdx.x;
     
     if (idx < NUM_OF_DATA_POINTS*2)
     {
+        for (int index=idx;index<idx+5;index++)
+        {
         float x = data[idx] * data[idx];
         // printf(" Data: %f Squared: %f ID:%d, Thread :%d , Block: %d , Block Dim: %d \n",data[idx],x, idx,threadIdx.x,blockIdx.x,blockDim.x);
         data[idx] = x;
+        }
         
 
     }
