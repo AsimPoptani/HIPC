@@ -1,0 +1,12 @@
+Setting up the array of random numbers
+Address of random_data: 0x7f38a4498010
+Getting data from urandom...
+Bytes to be read: 800000000
+Closed urandom
+Finsihed converting data
+Copying data to GPU
+Finished squaring y
+Finished adding x
+Inside circle: 157079800
+Outside circle: 42920200
+Pi is: 3.141596
